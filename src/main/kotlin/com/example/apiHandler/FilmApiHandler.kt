@@ -24,8 +24,8 @@ data class CreateFilmRequest(
     val durationSec: Int
 ) {
     init {
-        if (rating > 10) throw BadRequestException("rating can;lt be more than 10")
-        if (rating < 0) throw BadRequestException("rating can;lt be less than 0")
+        if (rating > 10) throw BadRequestException("rating can't be more than 10")
+        if (rating < 0) throw BadRequestException("rating can't be less than 0")
     }
 }
 
@@ -48,6 +48,10 @@ fun Application.configureFilmRoutes() {
             delete("{id}") {
                 val id = call.parameters["id"]?.toInt() ?: throw BadRequestException("id not provided")
                 call.respond(HttpStatusCode.OK, filmService.removeById(id))
+            }
+            get("findByAuthor/{author}") {
+                val author = call.parameters["author"] ?: throw BadRequestException("author not provided")
+                call.respond(HttpStatusCode.OK, filmService.findByAuthor(author))
             }
         }
     }

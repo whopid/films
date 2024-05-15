@@ -9,4 +9,5 @@ class FilmService(private val filmDao: FilmDAO) {
     suspend fun getAll(): List<GetFilmResponse> = filmDao.getAll()
     suspend fun add(film: CreateFilmRequest): Int = filmDao.add(film)
     suspend fun removeById(id:Int) = filmDao.removeById(id)
+    suspend fun findByAuthor(author: String) = filmDao.findByAuthor(author)
 }

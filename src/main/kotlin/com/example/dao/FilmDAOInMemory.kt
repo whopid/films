@@ -27,4 +27,8 @@ class FilmDAOInMemory : FilmDAO {
     override suspend fun removeById(id: Int) {
         filmStorage.removeAt(id)
     }
+
+    override suspend fun findByAuthor(author: String): List<GetFilmResponse> {
+        return filmStorage.filter { it.author == author }
+    }
 }
