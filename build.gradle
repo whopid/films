@@ -13,6 +13,12 @@ applicationDefaultJvmArgs = ["-Dio.ktor.development=$isDevelopment"]
 repositories {
     mavenCentral()
 }
+sourceSets {
+    main.kotlin.srcDirs = main.java.srcDirs = [ 'src']
+    test.kotlin.srcDirs = test.java.srcDirs = ['test']
+    main.resources.srcDirs = ['resources']
+    test.resources.srcDirs = ['testresources']
+}
 
 dependencies {
     implementation "io.ktor:ktor-server-core-jvm"
@@ -22,4 +28,19 @@ dependencies {
     implementation("io.ktor:ktor-serialization-jackson:$ktor_version")
     testImplementation "io.ktor:ktor-server-tests-jvm"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.5.2"
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.2'
+}
+
+test {
+    enableAssertions = true
+    useJUnitPlatform()
+
+    testLogging {
+        showStandardStreams = true
+        showStackTraces = false
+        exceptionFormat = 'SHORT'
+        events "PASSED", "FAILED", "SKIPPED", "STANDARD_OUT", "STANDARD_ERROR"
+    }
 }
